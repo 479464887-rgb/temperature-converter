@@ -1,62 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="description" content="Convert Celsius, Fahrenheit, Kelvin. Formula display with live calculation.">
-<meta name="keywords" content="temperature converter, celsius fahrenheit, kelvin converter">
-<title>Temperature Converter — DevKit Tools</title>
-<style>
-:root{--bg:#0d1117;--surface:#161b22;--border:#30363d;--text:#c9d1d9;--text2:#8b949e;--accent:#58a6ff;--radius:6px;}
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="description" content="Convert between Celsius, Fahrenheit, Kelvin"><title>Temperature Converter — DevKit Tools</title><style>
+:root{--bg:#0d1117;--surface:#161b22;--border:#30363d;--text:#c9d1d9;--accent:#58a6ff;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;}
-.header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;}
-.header a{color:var(--text);text-decoration:none;font-weight:600;font-size:14px;}
-.container{max-width:800px;margin:0 auto;padding:32px 24px;flex:1;width:100%;}
-h1{font-size:28px;font-weight:700;margin-bottom:8px;color:#f0f6fc;}
-.subtitle{color:var(--text2);font-size:14px;margin-bottom:32px;}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:16px;}
-.card h2{font-size:16px;margin-bottom:12px;}
-textarea,input,select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:10px;color:var(--text);font-size:13px;font-family:monospace;resize:vertical;}
-textarea:focus,input:focus,select:focus{outline:none;border-color:var(--accent);}
-.btn{background:#238636;color:#fff;border:none;border-radius:var(--radius);padding:8px 16px;font-size:13px;cursor:pointer;}
-.btn:hover{background:#2ea043;}
-.btn.secondary{background:var(--surface);border:1px solid var(--border);color:var(--text);}
-.output{margin-top:12px;word-break:break-all;min-height:40px;}
-.footer{text-align:center;padding:24px;color:var(--text2);font-size:12px;border-top:1px solid var(--border);}
-.footer a{color:var(--accent);text-decoration:none;}
-.label{display:block;font-size:12px;color:var(--text2);margin-bottom:4px;font-weight:500;}
-</style>
-</head>
-<body>
-<div class="header">
-  <a href="https://devkit-tools.xyz">← DevKit Tools</a>
-  <span style="color:var(--text2);font-size:13px;">Temperature Converter</span>
-</div>
-<div class="container">
-  <h1>Temperature Converter</h1>
-  <p class="subtitle">Convert Celsius, Fahrenheit, Kelvin. Formula display with live calculation.</p>
-  <div class="card">
-    <h2>Tool</h2>
-    <div id="tool-area">
-      <label class="label">Input</label>
-      <textarea id="input" rows="6" placeholder="Type or paste here..."></textarea>
-      <button class="btn" onclick="process()" style="margin-top:8px;">Convert</button>
-      <label class="label" style="margin-top:12px;">Output</label>
-      <textarea id="output" rows="6" readonly></textarea>
-    </div>
-  </div>
-</div>
-<div class="footer">
-  <a href="https://devkit-tools.xyz/privacy">Privacy</a> ·
-  <a href="https://devkit-tools.xyz/terms">Terms</a> ·
-  © 2026 DevKit Tools
-</div>
+body{font-family:-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:40px 16px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;max-width:400px;width:100%;}
+h1{font-size:20px;color:#f0f6fc;margin-bottom:20px;text-align:center;}
+input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;color:var(--text);font-size:20px;text-align:center;margin-bottom:12px;}
+input:focus{outline:none;border-color:var(--accent);}
+select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text);font-size:14px;margin-bottom:12px;}
+.results{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.r{background:var(--bg);padding:12px;border-radius:8px;text-align:center;}
+.r .val{font-size:24px;font-weight:600;color:var(--accent);}
+.r .unit{font-size:11px;color:var(--text);margin-top:4px;}
+</style></head><body><div class="card"><h1>🌡️ Temperature</h1>
+<input type="number" id="val" value="25" oninput="conv()">
+<select id="from" onchange="conv()"><option value="C">Celsius</option><option value="F" selected>Fahrenheit</option><option value="K">Kelvin</option></select>
+<div class="results"><div class="r"><div class="val" id="c">-</div><div class="unit">Celsius</div></div><div class="r"><div class="val" id="f">-</div><div class="unit">Fahrenheit</div></div><div class="r"><div class="val" id="k">-</div><div class="unit">Kelvin</div></div></div></div>
 <script>
-function process() {
-  const v = document.getElementById('input').value;
-  document.getElementById('output').value = v ? 'Processing... (full feature coming soon)' : '';
-}
-</script>
-</body>
-</html>
+function conv(){const v=parseFloat(document.getElementById('val').value)||0;const f=document.getElementById('from').value;let c;if(f==='C')c=v;else if(f==='F')c=(v-32)*5/9;else c=v-273.15;document.getElementById('c').textContent=c.toFixed(2);document.getElementById('f').textContent=((c*9/5)+32).toFixed(2);document.getElementById('k').textContent=(c+273.15).toFixed(2)}conv();
+</script></body></html>
