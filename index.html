@@ -19,10 +19,14 @@ select{width:100%;background:var(--bg);border:1px solid var(--border);border-rad
 .r{background:var(--bg);padding:12px;border-radius:8px;text-align:center;}
 .r .val{font-size:24px;font-weight:600;color:var(--accent);}
 .r .unit{font-size:11px;color:var(--text);margin-top:4px;}
-</style></head><body><div class="card"><h1>🌡️ Temperature</h1>
+</style><script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Temperature Converter","description":"Convert between Celsius, Fahrenheit, Kelvin","url":"https://479464887-rgb.github.io/temperature-converter/","applicationCategory":"DeveloperApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+</head><body><div class="card"><h1>🌡️ Temperature</h1>
 <input type="number" id="val" value="25" oninput="conv()">
 <select id="from" onchange="conv()"><option value="C">Celsius</option><option value="F" selected>Fahrenheit</option><option value="K">Kelvin</option></select>
 <div class="results"><div class="r"><div class="val" id="c">-</div><div class="unit">Celsius</div></div><div class="r"><div class="val" id="f">-</div><div class="unit">Fahrenheit</div></div><div class="r"><div class="val" id="k">-</div><div class="unit">Kelvin</div></div></div></div>
 <script>
+'use strict';
 function conv(){const v=parseFloat(document.getElementById('val').value)||0;const f=document.getElementById('from').value;let c;if(f==='C')c=v;else if(f==='F')c=(v-32)*5/9;else c=v-273.15;document.getElementById('c').textContent=c.toFixed(2);document.getElementById('f').textContent=((c*9/5)+32).toFixed(2);document.getElementById('k').textContent=(c+273.15).toFixed(2)}conv();
 </script></body></html>
